@@ -1,4 +1,4 @@
-import tX from '../../../../ref/tX.24.1.2.dev.min.js';
+import tX from '../../../../ref/tX.24.1.3.dev.min.js';
 export default class comp { }
 
 (async () => {
@@ -85,6 +85,25 @@ export default class comp { }
                         + '<br>All the elements should be displayed in the center of the screen like this.'
                         + '<br>Please use the <strong>comp.config.tXCenterDiv</strong> & <strong>comp.config.tXCenterContent</strong> css classes to center the elements.';
                     });
+                    await new tX.el().postAsync(tXBodyEl.id, {
+                        'elementType': 'label'
+                        , 'text': 'enter your user name'                   
+                        , 'elementId': `${tXBodyEl.id}-userNameLbl`
+                        , 'classList': [], 'style': {}
+                    }).then(async el => {});
+                    await new tX.el().postAsync(tXBodyEl.id, {
+                        'elementType': 'input'
+                        , 'type': 'text'
+                        //, 'text': 'enter your user name'                   
+                        , 'elementId': `${tXBodyEl.id}-userNameTxt`
+                        , 'classList': [], 'style': {}
+                    }).then(async el => {});
+                    await new tX.el().postAsync(tXBodyEl.id, {
+                        'elementType': 'button'                    
+                        ,'text': "check"
+                        , 'elementId': `${tXBodyEl.id}-btn`
+                        , 'classList': [], 'style': {}
+                    }).then(async el => {});
                 });
             });
         }
