@@ -98,6 +98,16 @@ export default class comp { }
                         , 'elementId': `${tXBodyEl.id}-userNameTxt`
                         , 'classList': [], 'style': {}
                     }).then(async el => {});
+
+                    await new tX.el().postAsync(tXBodyEl.id, {
+                        'elementType': 'input'
+                        , 'type': 'text'
+                        //, 'text': 'enter your user name'                   
+                        , 'elementId': `${tXBodyEl.id}-userNameTxt123`
+                        , 'classList': [], 'style': {}
+                    }).then(async el => {});
+                    
+                    
                     await new tX.el().postAsync(tXBodyEl.id, {
                         'elementType': 'button'                    
                         ,'text': "check"
