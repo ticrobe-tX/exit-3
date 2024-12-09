@@ -1,4 +1,4 @@
-import tX from '../../../../ref/tX.24.1.4.dev.min.js';
+import tX from '../../../../ref/tX.24.1.5.dev.min.js';
 export default class comp { }
 
 (async () => {
@@ -24,6 +24,7 @@ export default class comp { }
     }
 
     //#endregion add the messages here.  Please see the sample entry provided below
+
     comp.tXTextBox = class {
 
         //#region mobile
@@ -70,9 +71,8 @@ export default class comp { }
             await new tX.el().postAsync(tXTextBoxRootEl.id, {
                 'elementType': 'input'
                 , 'type': 'text'
-                //, 'placeholder': " "
                 , 'elementId': `${tXTextBoxRootEl.id}-inp`
-                , 'classList': [], 'style': {}
+                , 'classList': [], 'style': { 'height': '40px' }
             }).then(async el => {
                 el.addEventListener('focus', async (e) => {
                     let flEl = await new tX.el().getClosestElAsync(e.target, comp.config.tXFloatingLabel);
@@ -84,11 +84,72 @@ export default class comp { }
                     , 'for': `${tXTextBoxRootEl.id}-inp`
                     , 'text': 'user name'
                     , 'elementId': `${tXTextBoxRootEl.id}-lbl`
-                    , 'classList': [comp.config.tXFloatingLabelEl], 'style': { }
+                    , 'classList': [comp.config.tXFloatingLabelEl], 'style': {}
                 }).then(async el => { });
             });
         }
-        #postDesktopAsync = async (textBoxEl) => {
+        #postDesktopAsync = async (tbConfig) => {
+            // get the textBoxEl parent id
+            let textBoxElId = tbConfig.tbParentEl === document.body ? 'body' : tbConfig.tbParentEl.id;
+
+            // post your desktop css here
+            await this.#postDesktopCSSAsync(`${textBoxElId}-tXTextBox-desktop-css`);
+            
+            return await new tX.el().postAsync(textBoxElId, {
+                'elementType': 'div'
+                , 'elementId': `${textBoxElId}-tb`
+                , 'classList': [], 'style': { 'display': 'flex', 'padding': '10px' }
+            }).then(async tbEl => {
+                await new tX.el().postAsync(tbEl.id, {
+                    'elementType': 'div'
+                    , 'elementId': `${tbEl.id}-icons`
+                    , 'classList': [], 'style': {}
+                }).then(async tbIconsEl => {
+                    await new tX.el().postAsync(tbIconsEl.id, {
+                        'elementType': 'div'
+                        , 'elementId': `${tbIconsEl.id}-div1`
+                        , 'classList': [], 'style': { 'padding': '5px', 'background': '#dcd5d5' }
+                    }).then(async tbIconDiv1El => {
+                        await new tX.el().postAsync(tbIconDiv1El.id, {
+                            'elementType': 'span'
+                            , 'elementId': `${tbIconDiv1El.id}-icon`
+                            , 'text': 'person'
+                            , 'classList': ['material-icons'], 'style': { 'color': 'blue' }
+                        });
+                    });
+                    await new tX.el().postAsync(tbIconsEl.id, {
+                        'elementType': 'div'
+                        , 'elementId': `${tbIconsEl.id}-div2`
+                        , 'classList': [], 'style': { 'padding': '5px', 'background': '#dcd5d5' }
+                    }).then(async tbIconDiv2El => {
+                        await new tX.el().postAsync(tbIconDiv2El.id, {
+                            'elementType': 'span'
+                            , 'elementId': `${tbIconDiv2El.id}-icon`
+                            , 'text': 'cancel'
+                            , 'classList': ['material-icons'], 'style': { 'color': 'red', 'font-weight': 'bold' }
+                        });
+                    });
+                });
+                await new tX.el().postAsync(tbEl.id, {
+                    'elementType': 'div'
+                    , 'elementId': `${tbEl.id}-form`
+                    , 'classList': [], 'style': {}
+                }).then(async tbFormEl => {
+                    await new tX.el().postAsync(tbFormEl.id, {
+                        'elementType': 'div'
+                        , 'elementId': `${tbFormEl.id}-tb-root`
+                        , 'classList': [comp.config.tXFloatingLabel], 'style': {}
+                    }).then(async tXTextBoxRootEl => { await this.#postDesktopTextBoxAsync(tXTextBoxRootEl); });
+                    await new tX.el().postAsync(tbFormEl.id, {
+                        'elementType': 'label'
+                        , 'text': 'test helper text'
+                        , 'elementId': `${tbFormEl.id}-help`
+                        , 'classList': [comp.config.tXHelperText], 'style': {}
+                    }).then(async el => { });
+                });                
+            });
+        }
+        #postDesktopAsync1 = async (textBoxEl) => {
             // get the textBoxEl parent id
             let textBoxElId = textBoxEl === document.body ? 'body' : textBoxEl.id;
 
@@ -97,23 +158,36 @@ export default class comp { }
             return await new tX.el().postAsync(textBoxElId, {
                 'elementType': 'div'
                 , 'elementId': `${textBoxElId}-tb`
-                , 'classList': [], 'style': { 'display': 'flex'}
+                , 'classList': [], 'style': { 'display': 'flex', 'padding': '10px' }
             }).then(async tbEl => {
                 await new tX.el().postAsync(tbEl.id, {
                     'elementType': 'div'
                     , 'elementId': `${tbEl.id}-icon-div`
-                    , 'classList': [ comp.config.tXCenterDiv ], 'style': { 'height': '53px', 'width': '30px', 'background': '#d3cdcd' }
+                    , 'classList': [comp.config.tXCenterDiv], 'style': { 'height': '65px', 'width': '40px', 'background': '#d3cdcd' }
                 }).then(async iconEl => {
                     await new tX.el().postAsync(iconEl.id, {
-                        'elementType': 'i'
-                        , 'elementId': `${iconEl.id}-icon`
-                        , 'classList': ['fa', 'fa-user', comp.config.tXCenterContent], 'style': {  }
-                    }).then(async el => { });
-                });                
+                        'elementType': 'div'
+                        , 'elementId': `${iconEl.id}-icons`
+                        , 'classList': [comp.config.tXCenterDiv], 'style': {}
+                    }).then(async iconsEl => {
+                        await new tX.el().postAsync(iconsEl.id, {
+                            'elementType': 'span'
+                            , 'elementId': `${iconsEl.id}-icon1`
+                            , 'text': 'person'
+                            , 'classList': ['material-icons', comp.config.tXCenterContent], 'style': { 'color': 'blue' }
+                        }).then(async el => { });
+                        await new tX.el().postAsync(iconsEl.id, {
+                            'elementType': 'span'
+                            , 'elementId': `${iconsEl.id}-icon2`
+                            , 'text': 'menu'
+                            , 'classList': ['material-icons', comp.config.tXCenterContent], 'style': { 'color': 'blue' }
+                        }).then(async el => { });
+                    });
+                });
                 await new tX.el().postAsync(tbEl.id, {
                     'elementType': 'form'
                     , 'elementId': `${tbEl.id}-form`
-                    , 'classList': [comp.config.tXTextBox], 'style': { 'background': '#eee5e5'}
+                    , 'classList': [comp.config.tXTextBox], 'style': { 'background': '#eee5e5' }
                 }).then(async formEl => {
                     await new tX.el().postAsync(formEl.id, {
                         'elementType': 'div'
@@ -132,20 +206,24 @@ export default class comp { }
         //#endregion desktop
 
         //#region component crud
-        postAsync = async (loginEl) => {
+        postAsync = async (tbConfig) => {
             await tX.env.postAsync();
+            await tX.css.postAsync();
             let deviceType = await tX.device.getAsync();
             if (deviceType === tX.config.mobile) {
-                return await this.#postMobileAsync(loginEl);
+                return await this.#postMobileAsync(tbConfig);
             }
             if (deviceType === tX.config.tablet) {
-                return await this.#postTabletAsync(loginEl);
+                return await this.#postTabletAsync(tbConfig);
             }
             if (deviceType === tX.config.desktop) {
-                return await this.#postDesktopAsync(loginEl);
+                return await this.#postDesktopAsync(tbConfig);
             }
         }
         //#endregion component crud
     }
-    return await new comp.tXTextBox().postAsync(document.body).then(async compEl => { });
+    return await new comp.tXTextBox().postAsync({
+        tbParentEl: document.body
+        , tbId: 'tbUserName'
+    }).then(async compEl => { });
 })();
